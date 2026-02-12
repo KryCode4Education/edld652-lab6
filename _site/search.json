@@ -4,6 +4,41 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n\n[1] 2"
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "scripts/lab-6.html",
+    "href": "scripts/lab-6.html",
+    "title": "Lab 6 Dashboard",
+    "section": "",
+    "text": "This plot shows the relationship between flipper length and body mass. Color encodes bill length.\nThis data was obtained from the palmerpenguins package.\n\n\n\n\nPenguins rows: 344\nSpecies: 3"
+  },
+  {
+    "objectID": "scripts/lab-6.html#about-this-graphic",
+    "href": "scripts/lab-6.html#about-this-graphic",
+    "title": "Lab 6 Dashboard",
+    "section": "",
+    "text": "This plot shows the relationship between flipper length and body mass. Color encodes bill length.\nThis data was obtained from the palmerpenguins package."
+  },
+  {
+    "objectID": "scripts/lab-6.html#quick-stats",
+    "href": "scripts/lab-6.html#quick-stats",
+    "title": "Lab 6 Dashboard",
+    "section": "",
+    "text": "Penguins rows: 344\nSpecies: 3"
+  },
+  {
+    "objectID": "scripts/lab-6.html#americas-gdp-2007-1",
+    "href": "scripts/lab-6.html#americas-gdp-2007-1",
+    "title": "Lab 6 Dashboard",
+    "section": "Americas GDP, 2007",
+    "text": "Americas GDP, 2007\n\nStatic Chart\n\n\n\n\n\n\n\n\n\n\n\nInteractive Chart"
+  },
+  {
+    "objectID": "scripts/lab-6.html#gdp-life-expectancy-comparisons",
+    "href": "scripts/lab-6.html#gdp-life-expectancy-comparisons",
+    "title": "Lab 6 Dashboard",
+    "section": "GDP & Life Expectancy Comparisons",
+    "text": "GDP & Life Expectancy Comparisons\n\nChart A\n\n\n\n\n\n\n\n\n\n\n\nChart B"
   }
 ]
