@@ -1,3 +1,181 @@
 ---
-title: "EDLD 652 - Lab 6"
+title: "Lab 6 Dashboard"
+output-file: index.html
+format:
+  dashboard:
+    theme: cosmo
+execute:
+  freeze: auto
 ---
+
+```{r}
+#| label: load-packages
+#| include: false
+
+library(palmerpenguins)
+library(tidyverse)
+library(viridis)
+library(gapminder)
+library(ggrepel)
+library(plotly)
+```
+
+# Penguins
+
+::: sidebar
+## About this graphic
+
+This plot shows the relationship between flipper length and body mass. Color encodes bill length.
+
+This data was obtained from the `palmerpenguins` package.
+
+## Quick stats
+
+-   Penguins rows: `r nrow(penguins)`
+-   Species: `r dplyr::n_distinct(penguins$species)`
+:::
+
+```{r}
+#| label: penguin-viz
+
+pointrep1 <- penguins |> 
+  ggplot(aes(flipper_length_mm, body_mass_g, color = bill_length_mm)) +
+  geom_point(size = 3) +
+  scale_color_viridis_c(option = "inferno") +
+  labs(
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)",
+    color = "Bill Length (mm)"
+  )
+
+pointrep1
+```
+
+# Americas GDP, 2007
+
+## Americas GDP, 2007 {.tabset}
+
+### Static Chart
+
+```{r}
+#| label: americas-gdp
+
+gapminder1 <- gapminder |> 
+  filter(year == 2007,
+         continent == "Americas") |> 
+  mutate(
+    country = fct_reorder(country, gdpPercap)
+  )
+
+gapminder1 |> 
+  ggplot(aes(gdpPercap, country)) +
+  geom_segment(aes(x = 0, xend = gdpPercap,
+                   y = country, yend = country),
+               color = "black") +
+  geom_point(size = 3, color= "#43b608") +
+  scale_x_continuous(labels = scales::dollar) +
+  labs(
+    title = "GDP per Capita by Country in the Americas, 2007",
+    x = "GDP per Capita ($)",
+    y = "Country"
+  ) +
+  theme_minimal()
+```
+
+### Interactive Chart
+
+```{r}
+#| label: americas-gdp-plotly
+
+gapminder1_plotly <- gapminder1 |>
+  ggplot(aes(
+    x = gdpPercap,
+    y = country,
+    text = paste0(
+      "Country: ", country,
+      "<br>GDP per Capita: $", scales::comma(gdpPercap)
+    )
+  )) +
+  geom_point(size = 3) +
+  scale_x_continuous(labels = scales::dollar) +
+  labs(
+    x = "GDP per Capita ($)",
+    y = "Country"
+  ) +
+  theme_minimal()
+
+ggplotly(gapminder1_plotly, tooltip = "text")
+```
+
+# Chart Comparisons
+
+## GDP & Life Expectancy Comparisons {.tabset}
+
+### Chart A
+
+```{r}
+#| label: gdp-per-cap
+
+gm1 <- gapminder1 |> 
+  ggplot(aes(gdpPercap, country)) +
+  geom_segment(aes(x = 0, xend = gdpPercap,
+                   y = country, yend = country),
+               color = "black") +
+  geom_point(size = 3, color= "#43b608") +
+  scale_x_continuous(labels = scales::dollar) +
+  labs(
+    x = "GDP per Capita ($)",
+    y = "Country"
+  ) +
+  theme_minimal()
+
+gm1
+```
+
+### Chart B
+
+```{r}
+#| label: gdp-life-exp
+
+gapminder6 <- gapminder |> 
+  filter(year == 2007,
+        continent == "Americas")
+
+highestgdp <- gapminder6 |> 
+  filter(country %in% c("United States", "Canada", "Puerto Rico"))
+
+lowestlifeexp <- gapminder6 |> 
+  filter(country %in% c("Haiti", "Bolivia", "Trinidad and Tobago"))
+
+gm2 <- gapminder6 |> 
+  ggplot(aes(gdpPercap, lifeExp)) +
+  geom_point(size = 3, color = "#ffd735") +
+  geom_point(
+    data = highestgdp,
+    size = 4,
+    color = "#ccff35"
+  ) +
+  geom_text_repel(
+    data = highestgdp,
+    aes(label = country),
+    size = 4
+  ) +
+  geom_point(
+    data = lowestlifeexp,
+    size = 4,
+    color = "#ff6635"
+  ) +
+  geom_text_repel(
+    data = lowestlifeexp,
+    aes(label = country),
+    size = 4
+  ) +
+  scale_x_log10(labels = scales::dollar) +
+  labs(
+    x = "GDP per Capita  ($)",
+    y = "Life Expectancy"
+  ) +
+  theme_minimal()
+
+gm2
+```
