@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: scripts
+  output-dir: docs
 
 website:
   title: "EDLD 652 - Lab 6"
